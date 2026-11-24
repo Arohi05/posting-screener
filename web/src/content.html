@@ -1,0 +1,151 @@
+<title>Posting Screener</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: paste panel on the left, verdict on the right; stacks on a phone. Accent matches the resume teal. */
+:root{
+  --bg:#F4F7F7; --surface:#FFFFFF; --ink:#14262B; --muted:#51656A; --line:#D3DDDF;
+  --accent:#0F4C5C; --accent-ink:#FFFFFF;
+  --good:#1B6B3A; --good-bg:#E1F2E6; --warn:#855600; --warn-bg:#FAEFD3; --bad:#A3262A; --bad-bg:#FAE4E3;
+  --head:"Manrope",system-ui,sans-serif; --body:"Source Sans 3",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0E1A1D; --surface:#142326; --ink:#E5EEEF; --muted:#9BAFB3; --line:#26393D;
+  --accent:#6CC1D4; --accent-ink:#082127;
+  --good:#7ED49B; --good-bg:#16301F; --warn:#E8BC5C; --warn-bg:#34290D; --bad:#F29B9D; --bad-bg:#3A1A1C; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E1A1D; --surface:#142326; --ink:#E5EEEF; --muted:#9BAFB3; --line:#26393D;
+  --accent:#6CC1D4; --accent-ink:#082127;
+  --good:#7ED49B; --good-bg:#16301F; --warn:#E8BC5C; --warn-bg:#34290D; --bad:#F29B9D; --bad-bg:#3A1A1C; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.5;margin:0;
+  padding-block:32px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1040px;margin:0 auto;display:grid;gap:28px}
+h1,h2{font-family:var(--head);text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:2rem;font-weight:800;letter-spacing:-.01em}
+h2{font-size:1.15rem;font-weight:700}
+.lede{color:var(--muted);margin:8px 0 0;max-width:62ch}
+.grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:760px){.grid{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;display:grid;gap:14px;min-width:0}
+label{font-weight:600;font-size:.92rem;display:block;margin-bottom:6px}
+textarea,input[type=text]{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:10px 12px}
+textarea{min-height:230px;resize:vertical}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+button{font:inherit;font-weight:700;cursor:pointer;border-radius:6px;padding:10px 16px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink)}
+button.ghost{background:transparent;color:var(--accent)}
+button.ghost[aria-pressed=true]{background:var(--accent);color:var(--accent-ink)}
+.small{font-size:.88rem;color:var(--muted)}
+details summary{cursor:pointer;font-weight:600;font-size:.92rem}
+details > div{display:grid;gap:10px;margin-top:10px}
+.verdict{display:inline-block;font-family:var(--head);font-weight:800;font-size:1.5rem;padding:6px 16px;border-radius:6px;width:fit-content}
+.verdict.good{background:var(--good-bg);color:var(--good)}
+.verdict.warn{background:var(--warn-bg);color:var(--warn)}
+.verdict.bad{background:var(--bad-bg);color:var(--bad)}
+ul.reasons{margin:0;padding-left:1.1rem;display:grid;gap:6px}
+.bars{display:grid;gap:12px}
+.bar{display:grid;grid-template-columns:150px minmax(0,1fr) 48px;gap:12px;align-items:center;font-variant-numeric:tabular-nums}
+.track{background:var(--bg);border:1px solid var(--line);border-radius:4px;height:22px;overflow:hidden}
+.fill{height:100%;background:var(--accent)}
+.fill.base{background:var(--muted)}
+@media (max-width:520px){.bar{grid-template-columns:minmax(0,1fr) 44px}.bar .track{grid-column:1 / -1;order:3}}
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.notes p{margin:6px 0 0;color:var(--muted)}
+@media (prefers-reduced-motion:no-preference){.fill{transition:width .4s ease}}
+</style>
+<!--BODY-->
+<div class="wrap">
+  <header>
+    <h1>Posting Screener</h1>
+    <p class="lede">Paste an internship or job posting. It gives a verdict (Good fit, Check carefully or Risky) and lists the exact rules that triggered it, so you can check the reasoning yourself.</p>
+  </header>
+
+  <div class="grid">
+    <section class="panel" aria-labelledby="in-h">
+      <h2 id="in-h">The posting</h2>
+      <div>
+        <label for="posting">Paste the full posting text</label>
+        <textarea id="posting" spellcheck="false"></textarea>
+      </div>
+      <div>
+        <label for="loc">Location (optional)</label>
+        <input type="text" id="loc" placeholder="e.g. Bengaluru, or Work from home">
+      </div>
+      <div class="row">
+        <button id="go" type="button">Screen this posting</button>
+        <span class="small">Try an example:</span>
+        <button class="ghost" type="button" data-ex="good" aria-pressed="false">Good fit</button>
+        <button class="ghost" type="button" data-ex="warn" aria-pressed="false">Check carefully</button>
+        <button class="ghost" type="button" data-ex="bad" aria-pressed="true">Risky</button>
+      </div>
+      <details>
+        <summary>Your profile (change it to match yours)</summary>
+        <div>
+          <div><label for="skills">Your skills, comma separated</label><textarea id="skills" style="min-height:90px"></textarea></div>
+          <div><label for="cities">Cities you would work in, comma separated</label><input type="text" id="cities"></div>
+          <label style="display:flex;gap:8px;align-items:center;font-weight:400"><input type="checkbox" id="remote"> Accept remote or work from home</label>
+        </div>
+      </details>
+    </section>
+
+    <section class="panel" aria-labelledby="out-h" aria-live="polite">
+      <h2 id="out-h">Verdict</h2>
+      <div id="verdict" class="verdict"></div>
+      <ul id="reasons" class="reasons"></ul>
+      <p class="small" id="foot"></p>
+    </section>
+  </div>
+
+  <section class="panel" aria-labelledby="acc-h">
+    <h2 id="acc-h">How well it works so far</h2>
+    <p class="small" style="margin:0">Tested on 29 real internship postings from Internshala and LinkedIn, labelled by hand. Company names were removed.</p>
+    <div class="bars">
+      <div class="bar"><span>This screener</span><div class="track"><div class="fill" style="width:79%"></div></div><strong>79%</strong></div>
+      <div class="bar"><span>Always guess "Check carefully"</span><div class="track"><div class="fill base" style="width:52%"></div></div><strong>52%</strong></div>
+    </div>
+    <p style="margin:0">It caught 8 of the 9 postings labelled Risky. None of those 9 asked for a fee. They were unpaid roles promising large salaries later, mass-hiring claims and "comment INTERESTED" posts.</p>
+    <p class="small" style="margin:0"><strong>Read this number with care:</strong> the rules were written after reading these same 29 postings, so 79% is likely too high. A fresh set of postings is the fair test.</p>
+  </section>
+
+  <section class="notes">
+    <div><h2>What it does not do</h2><p>It does not collect postings from LinkedIn, Internshala or Naukri, because their terms forbid scraping. You paste the text. It cannot check whether a company really exists.</p></div>
+    <div><h2>What to do with a verdict</h2><p>Good fit means no red flags and your skills and city match. Check carefully means something is missing or off. Risky means two or more red flags, or a fee. Never pay to get an internship, whatever the label says.</p></div>
+  </section>
+</div>
+
+<script>
+/*RULES*/
+const DEFAULT_PROFILE = /*PROFILE*/;
+const EXAMPLES = {
+  good: {loc:"Bengaluru", text:"QA Engineer Intern. Bengaluru, on-site, 6 months. Manual testing, Postman API testing and JIRA bug tracking. Stipend: ₹ 15,000 /month. Apply on the company careers page."},
+  warn: {loc:"Gurugram", text:"Business Analyst Intern. Gurugram, on-site. SQL and Excel dashboards, weekly reports. Stipend: ₹ 12,000 /month."},
+  bad:  {loc:"Work from home", text:"Data Analytics internship. Work from home, 1 month, unpaid. Skills: Python, SQL, Excel. On successful conversion the candidate can expect a salary of ₹ 880000 to 940000/year. Activity: Opportunities posted: 387; Candidates hired: 5773."}
+};
+const $ = (id) => document.getElementById(id);
+const list = (s) => s.split(",").map((x) => x.trim().toLowerCase()).filter(Boolean);
+function run(){
+  const profile = {skills:list($("skills").value), target_cities:list($("cities").value), accept_remote:$("remote").checked};
+  const text = $("posting").value.trim();
+  const v = $("verdict"), ul = $("reasons");
+  ul.textContent = "";
+  if(!text){ v.className="verdict"; v.textContent=""; $("foot").textContent="Paste a posting first, then press Screen."; return; }
+  const r = screen({title:"", text, location:$("loc").value}, profile);
+  v.className = "verdict " + ({"Good fit":"good","Check carefully":"warn","Risky":"bad"}[r.label]);
+  v.textContent = r.label;
+  r.reasons.forEach((x)=>{ const li=document.createElement("li"); li.textContent=x; ul.appendChild(li); });
+  $("foot").textContent = "Each reason is one rule in the code. A label is a first pass, not a ruling. Check the company yourself before you apply.";
+}
+function load(key){
+  $("posting").value = EXAMPLES[key].text; $("loc").value = EXAMPLES[key].loc;
+  document.querySelectorAll("[data-ex]").forEach((b)=>b.setAttribute("aria-pressed", String(b.dataset.ex===key)));
+  run();
+}
+$("skills").value = DEFAULT_PROFILE.skills.join(", ");
+$("cities").value = DEFAULT_PROFILE.target_cities.join(", ");
+$("remote").checked = DEFAULT_PROFILE.accept_remote;
+$("go").addEventListener("click", run);
+document.querySelectorAll("[data-ex]").forEach((b)=>b.addEventListener("click",()=>load(b.dataset.ex)));
+load("bad");
+</script>

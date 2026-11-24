@@ -1,0 +1,9 @@
+id,title,company,location,text,my_label
+S1,QA Intern,Example Co A,Bengaluru,"Manual testing, JIRA bug tracking and Postman API testing. Stipend 10000/month.",Good fit
+S2,Data Analyst Intern,Example Co B,Hyderabad,"Work with Python, SQL and Excel dashboards. Stipend 12000/month.",Good fit
+S3,Data Entry Intern,Example Co C,Indore,"Typing work. Pay Rs 2000 as registration fee, refundable after 3 months. Guaranteed placement.",Risky
+S4,Software Testing Intern,Example Co D,Chennai,"Selenium and pytest. Contact on WhatsApp only. No interview, instant selection.",Risky
+S5,Business Intern,Example Co E,Mumbai,"Sales calls and field visits. Unpaid.",Check carefully
+S6,ML Intern,Example Co F,Work from home,"Python, pandas and scikit-learn for model evaluation. Stipend 8000/month.",Good fit
+S7,Marketing Intern,Example Co G,Bengaluru,"Social media posts and Canva designs.",Check carefully
+S8,Data Analyst Intern,Example Co H,Jaipur,"SQL and Excel reporting. Stipend 10000/month.",Check carefully

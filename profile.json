@@ -1,0 +1,32 @@
+{
+  "skills": [
+    "python",
+    "sql",
+    "excel",
+    "pandas",
+    "postman",
+    "jira",
+    "selenium",
+    "pytest",
+    "manual testing",
+    "data analysis",
+    "data cleaning",
+    "scikit-learn",
+    "qa",
+    "quality assurance",
+    "software testing",
+    "test cases",
+    "api testing",
+    "data analytics",
+    "matplotlib",
+    "seaborn",
+    "numpy"
+  ],
+  "target_cities": [
+    "bengaluru",
+    "bangalore",
+    "hyderabad",
+    "chennai"
+  ],
+  "accept_remote": true
+}

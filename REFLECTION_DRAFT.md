@@ -10,4 +10,3 @@
 
 **What I would do next.** Test on postings the rules have never seen, collect more Good fit postings, and let users report wrong verdicts.
 
-**How I used AI.** I used Claude to help write and test the code and to draft the first labels. I reviewed the labels and the results myself. (Edit this line so it is true for you.)

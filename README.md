@@ -14,7 +14,7 @@ Students check each LinkedIn, Internshala or Naukri posting by hand, ask seniors
 - Every verdict comes with reasons, and each reason is one rule you can read in `screener/rules.py` or `web/rules.js`.
 
 ## Live demo
-Add your public URL here after deploying (see "Deploy on GitHub Pages").
+https://arohi05.github.io/posting-screener/
 
 ## How well it works
 Tested on 29 real postings from Internshala and LinkedIn that I labelled by hand (company names removed, see `data/postings.csv`).
